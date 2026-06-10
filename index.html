@@ -3,370 +3,270 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Dravix Leads — Qualified Leads Delivered to Your Door</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<title>Dravix Works — Built Different. Delivered Fast.</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
 <style>
-:root{--black:#070707;--white:#f4f1ec;--gold:#c8a84b;--gold2:#e8c96a;--gray1:#111;--gray2:#1c1c1c;--gray3:#2a2a2a;--mid:#555;--light:#888;}
+:root{--black:#080808;--white:#f5f2ee;--gold:#c8a84b;--gold2:#e8c96a;--gray:#2a2a2a;--gray1:#111;--gray2:#1c1c1c;--mid:#555;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{background:var(--black);color:var(--white);font-family:'DM Mono',monospace;overflow-x:hidden;}
 ::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-thumb{background:var(--gold);}
 
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(7,7,7,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(200,168,75,0.1);}
-.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:0.06em;color:var(--white);text-decoration:none;}
-.nav-logo span{color:var(--gold);}
-.nav-back{font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color 0.2s;}
-.nav-back:hover{color:var(--gold);}
+nav{position:fixed;top:0;left:0;right:0;padding:24px 48px;display:flex;align-items:center;justify-content:space-between;z-index:50;background:rgba(8,8,8,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(200,168,75,0.1);}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;letter-spacing:0.08em;color:var(--white);text-decoration:none;}
+.logo span{color:var(--gold);}
+.nav-links{display:flex;gap:32px;list-style:none;}
+.nav-links a{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color 0.2s;}
+.nav-links a:hover{color:var(--gold);}
 
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 48px 80px;position:relative;overflow:hidden;}
-.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(200,168,75,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(200,168,75,0.025) 1px,transparent 1px);background-size:80px 80px;pointer-events:none;}
-.hero-glow{position:absolute;top:-100px;right:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(200,168,75,0.05) 0%,transparent 70%);pointer-events:none;}
-.hero-eyebrow{font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:32px;}
-.hero-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(3rem,9vw,8rem);line-height:0.9;letter-spacing:-0.03em;max-width:1000px;}
-.hero-title .gold{color:var(--gold);}
-.hero-title .outline{-webkit-text-stroke:1px var(--white);color:transparent;}
-.hero-row{display:flex;align-items:flex-end;justify-content:space-between;gap:40px;margin-top:48px;flex-wrap:wrap;}
-.hero-sub{font-size:0.78rem;color:var(--mid);max-width:400px;line-height:2;}
-.btn-gold{font-family:'Syne',sans-serif;font-weight:700;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;padding:18px 40px;background:var(--gold);color:var(--black);border:none;cursor:pointer;text-decoration:none;display:inline-block;clip-path:polygon(0 0,calc(100% - 10px) 0,100% 10px,100% 100%,10px 100%,0 calc(100% - 10px));transition:background 0.2s,transform 0.2s;}
-.btn-gold:hover{background:var(--gold2);transform:translateY(-2px);}
-.btn-outline{font-family:'Syne',sans-serif;font-weight:700;font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;padding:18px 40px;background:transparent;color:var(--white);border:1px solid var(--gray3);cursor:pointer;text-decoration:none;display:inline-block;transition:all 0.2s;margin-left:12px;}
-.btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 48px 80px;position:relative;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 70% 40%,rgba(200,168,75,0.07) 0%,transparent 70%);pointer-events:none;}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(200,168,75,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(200,168,75,0.025) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;}
+.hero-eyebrow{font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;}
+.hero-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(3.5rem,9vw,8rem);line-height:0.93;letter-spacing:-0.02em;max-width:900px;}
+.hero-title em{color:var(--gold);font-style:italic;}
+.hero-sub{margin-top:32px;font-size:0.78rem;color:var(--mid);max-width:400px;line-height:1.9;}
+.hero-cta{margin-top:40px;display:flex;align-items:center;gap:20px;}
+.btn-primary{font-family:'Syne',sans-serif;font-weight:700;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;padding:16px 32px;background:var(--gold);color:var(--black);border:none;cursor:pointer;text-decoration:none;display:inline-block;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));transition:background 0.2s;}
+.btn-primary:hover{background:var(--gold2);}
+.btn-ghost{font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--mid);text-decoration:none;border-bottom:1px solid var(--gray);padding-bottom:2px;transition:all 0.2s;}
+.btn-ghost:hover{color:var(--white);border-color:var(--white);}
 
-.ticker-wrap{border-top:1px solid var(--gray2);border-bottom:1px solid var(--gray2);overflow:hidden;padding:12px 0;background:var(--gray1);}
-.ticker-inner{display:flex;white-space:nowrap;animation:ticker 25s linear infinite;}
-.ticker-item{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--mid);padding:0 40px;}
+.ticker{border-top:1px solid var(--gray2);border-bottom:1px solid var(--gray2);overflow:hidden;padding:13px 0;background:var(--gray1);}
+.ticker-inner{display:flex;white-space:nowrap;animation:ticker 22s linear infinite;}
+.ticker-item{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--mid);padding:0 44px;}
 .ticker-item span{color:var(--gold);margin-right:8px;}
 @keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
 .section{padding:100px 48px;}
-.section-eyebrow{font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:48px;display:flex;align-items:center;gap:16px;}
-.section-eyebrow::after{content:'';width:60px;height:1px;background:var(--gold);opacity:0.4;}
+.section-label{font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:56px;display:flex;align-items:center;gap:16px;}
+.section-label::after{content:'';flex:1;max-width:80px;height:1px;background:var(--gold);opacity:0.4;}
 
-/* INDUSTRIES */
-.industries-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px;}
-.industry-card{background:var(--gray1);border:1px solid var(--gray2);padding:32px;transition:all 0.2s;text-align:center;}
-.industry-card:hover{background:var(--gray2);border-color:var(--gold);}
-.industry-icon{font-size:2rem;margin-bottom:16px;}
-.industry-name{font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;margin-bottom:8px;}
-.industry-detail{font-size:0.62rem;color:var(--mid);line-height:1.8;}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;}
+.service-card{background:var(--gray1);border:1px solid var(--gray2);padding:40px 36px;transition:background 0.3s;}
+.service-card:hover{background:#1a1a1a;}
+.service-num{font-size:0.58rem;letter-spacing:0.2em;color:var(--gold);opacity:0.6;margin-bottom:20px;}
+.service-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;margin-bottom:14px;line-height:1.3;}
+.service-desc{font-size:0.7rem;color:var(--mid);line-height:1.9;margin-bottom:28px;}
+.service-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.service-tag{font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;padding:5px 12px;border:1px solid var(--gray);color:var(--mid);}
+.service-btn{font-family:'Syne',sans-serif;font-weight:700;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;padding:10px 20px;background:var(--gold);color:var(--black);text-decoration:none;display:inline-block;transition:background 0.2s;}
+.service-btn:hover{background:var(--gold2);}
+.service-btn.outline{background:transparent;color:var(--gold);border:1px solid var(--gold);}
+.service-btn.outline:hover{background:var(--gold);color:var(--black);}
 
-/* PROCESS */
-.process-list{display:flex;flex-direction:column;gap:2px;}
-.process-step{display:grid;grid-template-columns:80px 1fr auto;gap:32px;align-items:center;background:var(--black);border:1px solid var(--gray2);padding:32px 36px;transition:border-color 0.2s;}
-.process-step:hover{border-color:var(--gold);}
-.step-num{font-family:'Syne',sans-serif;font-weight:800;font-size:2.5rem;color:var(--gold);opacity:0.3;line-height:1;}
-.step-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:6px;}
-.step-desc{font-size:0.68rem;color:var(--mid);line-height:1.8;}
-.step-tag{font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;padding:6px 14px;border:1px solid var(--gray3);color:var(--mid);white-space:nowrap;}
+/* CAREER PACKAGE */
+.career-section{padding:100px 48px;background:var(--gray1);border-top:1px solid var(--gray2);border-bottom:1px solid var(--gray2);}
+.career-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1100px;}
+.career-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2rem,4vw,3.2rem);line-height:1.05;letter-spacing:-0.02em;margin-bottom:20px;}
+.career-title span{color:var(--gold);}
+.career-body{font-size:0.72rem;color:var(--mid);line-height:2;margin-bottom:32px;}
+.checklist{display:flex;flex-direction:column;gap:12px;margin-bottom:40px;}
+.checklist li{font-size:0.7rem;color:#888;display:flex;align-items:center;gap:14px;list-style:none;}
+.checklist li::before{content:'✓';color:var(--gold);flex-shrink:0;}
+.stats-panel{background:var(--black);border:1px solid var(--gray2);padding:44px;position:relative;}
+.stats-panel::before{content:'';position:absolute;top:-1px;left:0;right:0;height:3px;background:linear-gradient(to right,var(--gold),transparent);}
+.stat-item{margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid var(--gray2);}
+.stat-item:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+.stat-num{font-family:'Syne',sans-serif;font-size:2.6rem;font-weight:800;color:var(--gold);line-height:1;margin-bottom:6px;}
+.stat-label{font-size:0.62rem;color:var(--mid);line-height:1.7;}
 
-/* WHAT'S INCLUDED */
-.included-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:2px;}
-.included-item{background:var(--gray1);border:1px solid var(--gray2);padding:32px;transition:all 0.2s;}
-.included-item:hover{background:var(--gray2);border-color:var(--gold);}
-.included-icon{font-size:1.5rem;margin-bottom:16px;}
-.included-name{font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;margin-bottom:10px;}
-.included-detail{font-size:0.65rem;color:var(--mid);line-height:1.9;}
+/* ABOUT */
+.about-section{padding:100px 48px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;border-top:1px solid var(--gray2);}
+.about-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2rem,4vw,3.5rem);line-height:1.05;letter-spacing:-0.02em;}
+.about-title span{color:var(--gold);}
+.about-stats{display:flex;gap:40px;margin-top:40px;}
+.astat .n{font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;color:var(--gold);}
+.astat .l{font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--mid);margin-top:4px;}
+.about-body{font-size:0.72rem;color:var(--mid);line-height:2;}
+.about-body p+p{margin-top:18px;}
 
-/* QUOTE FORM */
-.quote-wrap{padding:100px 48px;background:var(--gray1);border-top:1px solid var(--gray2);border-bottom:1px solid var(--gray2);}
-.quote-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;max-width:1000px;}
-.quote-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.8rem,3vw,2.8rem);line-height:1.1;letter-spacing:-0.02em;margin-bottom:20px;}
-.quote-title span{color:var(--gold);}
-.quote-body{font-size:0.72rem;color:var(--mid);line-height:2;margin-bottom:32px;}
-.quote-perks{display:flex;flex-direction:column;gap:14px;}
-.quote-perk{display:flex;align-items:center;gap:14px;font-size:0.68rem;color:var(--light);}
-.quote-perk::before{content:'✓';color:var(--gold);flex-shrink:0;}
-.quote-form{background:var(--black);border:1px solid var(--gray2);padding:40px;}
-.form-group{margin-bottom:16px;}
-.form-label{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--light);display:block;margin-bottom:8px;}
-.form-input{width:100%;background:var(--gray2);border:1px solid var(--gray3);color:var(--white);font-family:'DM Mono',monospace;font-size:0.72rem;padding:12px 16px;outline:none;transition:border-color 0.2s;}
-.form-input:focus{border-color:var(--gold);}
-.form-input::placeholder{color:var(--mid);}
-.form-select{width:100%;background:var(--gray2);border:1px solid var(--gray3);color:var(--white);font-family:'DM Mono',monospace;font-size:0.72rem;padding:12px 16px;outline:none;appearance:none;}
-.form-select option{background:var(--gray2);}
+/* CONTACT */
+.contact-section{padding:120px 48px;border-top:1px solid var(--gray2);text-align:center;}
+.contact-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.5rem,6vw,5rem);letter-spacing:-0.02em;margin-bottom:20px;}
+.contact-sub{font-size:0.72rem;color:var(--mid);margin-bottom:40px;}
+.contact-email{font-family:'Syne',sans-serif;font-size:clamp(1rem,2.5vw,1.5rem);font-weight:700;color:var(--gold);text-decoration:none;border-bottom:2px solid var(--gold);padding-bottom:4px;}
+.contact-email:hover{opacity:0.7;}
 
-/* FAQ */
-.faq-list{max-width:700px;display:flex;flex-direction:column;gap:2px;}
-.faq-item{background:var(--gray1);border:1px solid var(--gray2);}
-.faq-q{padding:22px 28px;font-family:'Syne',sans-serif;font-weight:600;font-size:0.85rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;transition:color 0.2s;}
-.faq-q:hover{color:var(--gold);}
-.faq-q span{color:var(--gold);font-size:1.1rem;transition:transform 0.2s;}
-.faq-a{padding:0 28px;max-height:0;overflow:hidden;transition:all 0.3s;font-size:0.68rem;color:var(--mid);line-height:1.9;}
-.faq-item.open .faq-a{max-height:200px;padding:0 28px 24px;}
-.faq-item.open .faq-q span{transform:rotate(45deg);}
-
-/* CTA */
-.cta-section{padding:120px 48px;text-align:center;position:relative;overflow:hidden;}
-.cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(200,168,75,0.07) 0%,transparent 70%);pointer-events:none;}
-.cta-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.5rem,6vw,5rem);letter-spacing:-0.02em;line-height:1.05;margin-bottom:20px;}
-.cta-sub{font-size:0.75rem;color:var(--mid);margin-bottom:48px;}
-
-footer{padding:32px 48px;border-top:1px solid var(--gray2);display:flex;align-items:center;justify-content:space-between;font-size:0.6rem;color:var(--mid);flex-wrap:wrap;gap:16px;}
-.footer-logo{font-family:'Syne',sans-serif;font-weight:800;color:var(--white);}
+footer{padding:36px 48px;border-top:1px solid var(--gray2);display:flex;align-items:center;justify-content:space-between;font-size:0.58rem;color:var(--mid);flex-wrap:wrap;gap:16px;}
+.footer-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;color:var(--white);}
 .footer-logo span{color:var(--gold);}
 
 @media(max-width:768px){
-  nav{padding:16px 20px;}
-  .hero{padding:100px 20px 60px;}
+  nav{padding:18px 20px;}.nav-links{display:none;}
+  .hero{padding:0 20px 60px;}
   .section{padding:60px 20px;}
-  .quote-wrap{padding:60px 20px;}.quote-grid{grid-template-columns:1fr;gap:40px;}
-  .process-step{grid-template-columns:50px 1fr;gap:16px;}.step-tag{display:none;}
-  .cta-section{padding:80px 20px;}
-  footer{padding:24px 20px;flex-direction:column;text-align:center;}
+  .career-section{padding:60px 20px;}.career-grid{grid-template-columns:1fr;gap:40px;}
+  .about-section{grid-template-columns:1fr;gap:40px;padding:60px 20px;}
+  .contact-section{padding:80px 20px;}
+  footer{padding:28px 20px;flex-direction:column;text-align:center;}
 }
 </style>
 </head>
 <body>
 
 <nav>
-  <a href="https://drakethetyrant.github.io/dravixworks" class="nav-logo">DRAVIX<span>.</span>WORKS</a>
-  <a href="https://drakethetyrant.github.io/dravixworks" class="nav-back">← Back to all services</a>
+  <a href="#" class="logo">DRAVIX<span>.</span>WORKS</a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
+  <div class="hero-bg"></div>
   <div class="hero-grid"></div>
-  <div class="hero-glow"></div>
-  <p class="hero-eyebrow">Dravix Leads — Lead Generation</p>
-  <h1 class="hero-title">
-    Stop chasing.<br>
-    Start <span class="gold">closing.</span>
-  </h1>
-  <div class="hero-row">
-    <p class="hero-sub">We find your ideal customers, write the outreach, and deliver warm leads directly to your inbox — so you can focus on closing deals, not hunting for them.</p>
-    <div>
-      <a href="#quote" class="btn-gold">Get a Free Quote</a>
-      <a href="#how-it-works" class="btn-outline">How It Works</a>
-    </div>
+  <p class="hero-eyebrow">Digital Services Studio — Houston, TX</p>
+  <h1 class="hero-title">Built<br><em>different.</em><br>Delivered fast.</h1>
+  <p class="hero-sub">Hiring, automation, content, leads, and careers — all under one roof. Built for results, delivered at speed.</p>
+  <div class="hero-cta">
+    <a href="#services" class="btn-primary">Explore Services</a>
+    <a href="#contact" class="btn-ghost">Get in touch →</a>
   </div>
 </section>
 
 <!-- TICKER -->
-<div class="ticker-wrap">
+<div class="ticker">
   <div class="ticker-inner">
-    <span class="ticker-item"><span>✦</span>Roofing</span>
-    <span class="ticker-item"><span>✦</span>Solar</span>
-    <span class="ticker-item"><span>✦</span>Real Estate</span>
-    <span class="ticker-item"><span>✦</span>Insurance</span>
-    <span class="ticker-item"><span>✦</span>Construction</span>
-    <span class="ticker-item"><span>✦</span>Marketing Agencies</span>
-    <span class="ticker-item"><span>✦</span>Logistics</span>
-    <span class="ticker-item"><span>✦</span>Roofing</span>
-    <span class="ticker-item"><span>✦</span>Solar</span>
-    <span class="ticker-item"><span>✦</span>Real Estate</span>
-    <span class="ticker-item"><span>✦</span>Insurance</span>
-    <span class="ticker-item"><span>✦</span>Construction</span>
-    <span class="ticker-item"><span>✦</span>Marketing Agencies</span>
-    <span class="ticker-item"><span>✦</span>Logistics</span>
+    <span class="ticker-item"><span>✦</span>Resume Rewrites</span>
+    <span class="ticker-item"><span>✦</span>Direct Hiring</span>
+    <span class="ticker-item"><span>✦</span>Business Automation</span>
+    <span class="ticker-item"><span>✦</span>Lead Generation</span>
+    <span class="ticker-item"><span>✦</span>SEO Content</span>
+    <span class="ticker-item"><span>✦</span>AI Headshots</span>
+    <span class="ticker-item"><span>✦</span>Resume Rewrites</span>
+    <span class="ticker-item"><span>✦</span>Direct Hiring</span>
+    <span class="ticker-item"><span>✦</span>Business Automation</span>
+    <span class="ticker-item"><span>✦</span>Lead Generation</span>
+    <span class="ticker-item"><span>✦</span>SEO Content</span>
+    <span class="ticker-item"><span>✦</span>AI Headshots</span>
   </div>
 </div>
 
-<!-- INDUSTRIES -->
-<section class="section">
-  <div class="section-eyebrow">Industries We Serve</div>
-  <div class="industries-grid">
-    <div class="industry-card">
-      <div class="industry-icon">🏠</div>
-      <div class="industry-name">Roofing</div>
-      <div class="industry-detail">Homeowners who need roof repairs or replacements in your service area.</div>
+<!-- SERVICES -->
+<section class="section" id="services">
+  <div class="section-label">What We Do</div>
+  <div class="services-grid">
+
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <div class="service-title">Dravix Connect — Direct Hiring</div>
+      <div class="service-desc">Skip the job board. Connect directly with Houston companies hiring entry-level talent in tech, business, and sales. Free for job seekers. $29 for companies.</div>
+      <div class="service-footer">
+        <span class="service-tag">Hiring</span>
+        <a href="https://dravixconnects.netlify.app" target="_blank" class="service-btn">Open Platform →</a>
+      </div>
     </div>
-    <div class="industry-card">
-      <div class="industry-icon">☀️</div>
-      <div class="industry-name">Solar</div>
-      <div class="industry-detail">Homeowners and businesses actively researching solar installation.</div>
+
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <div class="service-title">Resume & LinkedIn Rewrites</div>
+      <div class="service-desc">Upload your resume, get a professionally rewritten version back in under 10 minutes. ATS optimized, recruiter tested, delivered fast.</div>
+      <div class="service-footer">
+        <span class="service-tag">Career</span>
+        <a href="https://buy.stripe.com/bJecMXfMQcjQ8skbeS3F600" target="_blank" class="service-btn">Get Rewrite — $75 →</a>
+      </div>
     </div>
-    <div class="industry-card">
-      <div class="industry-icon">🏢</div>
-      <div class="industry-name">Real Estate</div>
-      <div class="industry-detail">Buyers, sellers, and investors looking for agents and properties.</div>
+
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <div class="service-title">Dravix Automate</div>
+      <div class="service-desc">We build your entire business automation system — lead capture, email sequences, CRM flows, and payment confirmations. Your business runs itself.</div>
+      <div class="service-footer">
+        <span class="service-tag">Automation</span>
+        <a href="https://dravixautomate.netlify.app" target="_blank" class="service-btn">Get a Quote →</a>
+      </div>
     </div>
-    <div class="industry-card">
-      <div class="industry-icon">🛡️</div>
-      <div class="industry-name">Insurance</div>
-      <div class="industry-detail">Small business owners and individuals shopping for coverage.</div>
+
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <div class="service-title">Dravix Leads</div>
+      <div class="service-desc">Personalized cold outreach at scale for roofing, solar, real estate, and insurance businesses. We build the list, write the copy, and deliver qualified leads.</div>
+      <div class="service-footer">
+        <span class="service-tag">Growth</span>
+        <a href="https://drakethetyrant.github.io/dravixleads" target="_blank" class="service-btn">Get a Quote →</a>
+      </div>
     </div>
-    <div class="industry-card">
-      <div class="industry-icon">🔨</div>
-      <div class="industry-name">Construction</div>
-      <div class="industry-detail">Commercial and residential clients needing contractors in Houston.</div>
+
+    <div class="service-card">
+      <div class="service-num">05</div>
+      <div class="service-title">SEO Content Agency</div>
+      <div class="service-desc">High-ranking articles and web copy written, optimized, and published directly to your site. We handle everything from keyword research to delivery.</div>
+      <div class="service-footer">
+        <span class="service-tag">Content</span>
+        <a href="mailto:dravixworks@gmail.com?subject=SEO Content Inquiry" class="service-btn outline">Get a Quote →</a>
+      </div>
     </div>
-    <div class="industry-card">
-      <div class="industry-icon">📦</div>
-      <div class="industry-name">Logistics</div>
-      <div class="industry-detail">Businesses needing shipping, warehousing, and supply chain solutions.</div>
+
+    <div class="service-card">
+      <div class="service-num">06</div>
+      <div class="service-title">AI Headshot Studio</div>
+      <div class="service-desc">Upload 10 selfies, receive studio-quality professional headshots. No camera, no photographer, no appointment. Delivered same day.</div>
+      <div class="service-footer">
+        <span class="service-tag">Studio</span>
+        <a href="mailto:dravixworks@gmail.com?subject=Headshot Inquiry" class="service-btn outline">Get a Quote →</a>
+      </div>
     </div>
+
   </div>
 </section>
 
-<!-- WHAT'S INCLUDED -->
-<div style="padding:0 48px 100px;">
-  <div class="section-eyebrow">What's Included</div>
-  <div class="included-grid">
-    <div class="included-item">
-      <div class="included-icon">🎯</div>
-      <div class="included-name">Targeted Lead List</div>
-      <div class="included-detail">We build a custom list of your ideal customers using Apollo.io — filtered by location, industry, company size, and job title.</div>
-    </div>
-    <div class="included-item">
-      <div class="included-icon">✍️</div>
-      <div class="included-name">Personalized Outreach Copy</div>
-      <div class="included-detail">Every email is written specifically for your business and your target customer. No generic templates that get ignored.</div>
-    </div>
-    <div class="included-item">
-      <div class="included-icon">📧</div>
-      <div class="included-name">3-Email Sequence</div>
-      <div class="included-detail">Initial outreach, follow-up, and final touch — automatically sent over 7 days to maximize response rates.</div>
-    </div>
-    <div class="included-item">
-      <div class="included-icon">📊</div>
-      <div class="included-name">Campaign Report</div>
-      <div class="included-detail">Full report with open rates, click rates, and responses after every campaign so you know exactly what's working.</div>
-    </div>
-    <div class="included-item">
-      <div class="included-icon">🔄</div>
-      <div class="included-name">Monthly Campaigns</div>
-      <div class="included-detail">New list, new copy, new campaign every month. Consistent lead flow without you lifting a finger.</div>
-    </div>
-    <div class="included-item">
-      <div class="included-icon">💬</div>
-      <div class="included-name">Warm Lead Handoff</div>
-      <div class="included-detail">When someone replies or clicks through, we flag them as warm and hand them directly to you ready to close.</div>
-    </div>
-  </div>
-</div>
-
-<!-- HOW IT WORKS -->
-<section class="section" id="how-it-works" style="padding-top:0;">
-  <div class="section-eyebrow">How It Works</div>
-  <div class="process-list">
-    <div class="process-step">
-      <div class="step-num">01</div>
-      <div>
-        <div class="step-title">Tell Us Your Target</div>
-        <div class="step-desc">Fill out our quote form. Tell us your industry, location, and ideal customer. Takes 2 minutes.</div>
-      </div>
-      <div class="step-tag">Day 1</div>
-    </div>
-    <div class="process-step">
-      <div class="step-num">02</div>
-      <div>
-        <div class="step-title">We Build Your List</div>
-        <div class="step-desc">We use Apollo.io to find verified emails of your ideal customers — filtered to your exact specifications.</div>
-      </div>
-      <div class="step-tag">Days 2–3</div>
-    </div>
-    <div class="process-step">
-      <div class="step-num">03</div>
-      <div>
-        <div class="step-title">We Write the Outreach</div>
-        <div class="step-desc">Custom 3-email sequence written specifically for your business. Reviewed and approved by you before sending.</div>
-      </div>
-      <div class="step-tag">Days 3–4</div>
-    </div>
-    <div class="process-step">
-      <div class="step-num">04</div>
-      <div>
-        <div class="step-title">Campaign Goes Live</div>
-        <div class="step-desc">Emails go out automatically over 7 days. You sit back and wait for replies to land in your inbox.</div>
-      </div>
-      <div class="step-tag">Days 5–12</div>
-    </div>
-    <div class="process-step">
-      <div class="step-num">05</div>
-      <div>
-        <div class="step-title">Warm Leads Delivered</div>
-        <div class="step-desc">We hand you every warm response with context. You close. We repeat next month.</div>
-      </div>
-      <div class="step-tag">Day 12+</div>
-    </div>
-  </div>
-</section>
-
-<!-- QUOTE FORM -->
-<section class="quote-wrap" id="quote">
-  <div class="section-eyebrow">Get a Free Quote</div>
-  <div class="quote-grid">
+<!-- CAREER PACKAGE -->
+<section class="career-section">
+  <div class="section-label">Featured Package</div>
+  <div class="career-grid">
     <div>
-      <h2 class="quote-title">Your next client<br>is <span>one email away.</span></h2>
-      <p class="quote-body">We don't do one-size-fits-all pricing. Tell us about your business and your target customer — we'll send you a custom quote within 24 hours.</p>
-      <div class="quote-perks">
-        <div class="quote-perk">Free quote within 24 hours</div>
-        <div class="quote-perk">No contracts, cancel anytime</div>
-        <div class="quote-perk">Priced for small businesses</div>
-        <div class="quote-perk">First campaign live in 5 days</div>
-        <div class="quote-perk">Real humans writing real emails</div>
-      </div>
+      <h2 class="career-title">The Career<br><span>Package.</span></h2>
+      <p class="career-body">Everything you need to land your next job — in one shot. Resume rewritten, LinkedIn optimized, and directly applied to 10 real Houston roles on Dravix Connect. Done in under 24 hours.</p>
+      <ul class="checklist">
+        <li>ATS-optimized resume rewrite</li>
+        <li>Full LinkedIn profile overhaul</li>
+        <li>Direct applications to 10 Houston roles</li>
+        <li>Delivered in under 24 hours</li>
+      </ul>
+      <a href="https://buy.stripe.com/fZueV56cg6Zw380fv83F602" target="_blank" class="btn-primary">Get the Package — $99 →</a>
     </div>
-    <div class="quote-form">
-      <div id="quoteMsg"></div>
-      <div class="form-group">
-        <label class="form-label">Your Name</label>
-        <input id="qName" class="form-input" placeholder="John Smith"/>
+    <div class="stats-panel">
+      <div class="stat-item">
+        <div class="stat-num">7%</div>
+        <div class="stat-label">higher average salary for professionals with expert-written resumes</div>
       </div>
-      <div class="form-group">
-        <label class="form-label">Email</label>
-        <input id="qEmail" class="form-input" type="email" placeholder="you@company.com"/>
+      <div class="stat-item">
+        <div class="stat-num">24h</div>
+        <div class="stat-label">turnaround — faster than any other service on the market</div>
       </div>
-      <div class="form-group">
-        <label class="form-label">Your Industry</label>
-        <select id="qIndustry" class="form-input form-select">
-          <option value="">Select your industry...</option>
-          <option>Roofing</option>
-          <option>Solar</option>
-          <option>Real Estate</option>
-          <option>Insurance</option>
-          <option>Construction</option>
-          <option>Logistics</option>
-          <option>Marketing Agency</option>
-          <option>Other</option>
-        </select>
+      <div class="stat-item">
+        <div class="stat-num">3-in-1</div>
+        <div class="stat-label">resume + LinkedIn + direct applications — nobody else does all three</div>
       </div>
-      <div class="form-group">
-        <label class="form-label">Your Location</label>
-        <input id="qLocation" class="form-input" placeholder="e.g. Houston, TX"/>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Who is your ideal customer?</label>
-        <textarea id="qCustomer" class="form-input" rows="3" placeholder="e.g. Homeowners in Houston with homes over 10 years old..."></textarea>
-      </div>
-      <button onclick="submitQuote()" class="btn-gold" style="width:100%;text-align:center;display:block;padding:14px;margin-top:8px;">Get My Free Quote →</button>
     </div>
   </div>
 </section>
 
-<!-- FAQ -->
-<section class="section">
-  <div class="section-eyebrow">FAQ</div>
-  <div class="faq-list">
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">How many leads will I get? <span>+</span></div>
-      <div class="faq-a">It depends on your industry and list size. Typically we send to 50-200 contacts per campaign. With a 40-50% open rate and 5-10% response rate, that's 2-10 warm leads per campaign.</div>
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div>
+    <h2 class="about-title">Fast output.<br><span>Real results.</span><br>Zero fluff.</h2>
+    <div class="about-stats">
+      <div class="astat"><div class="n">6+</div><div class="l">Service lines</div></div>
+      <div class="astat"><div class="n">24h</div><div class="l">Turnaround</div></div>
+      <div class="astat"><div class="n">100%</div><div class="l">Delivered</div></div>
     </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">What's your open rate? <span>+</span></div>
-      <div class="faq-a">Our campaigns average 40-50% open rates — more than double the industry average of 20%. We achieve this through targeted lists and personalized subject lines.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">Do I need to do anything? <span>+</span></div>
-      <div class="faq-a">Just fill out the quote form and approve the email copy before we send. After that, warm leads land in your inbox and you handle the conversation from there.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">Is cold email legal? <span>+</span></div>
-      <div class="faq-a">Yes — B2B cold email is legal under CAN-SPAM and GDPR when done correctly. Every email we send includes an unsubscribe option and complies with all regulations.</div>
-    </div>
-    <div class="faq-item">
-      <div class="faq-q" onclick="toggleFaq(this)">How is this different from buying a lead list? <span>+</span></div>
-      <div class="faq-a">Buying a list gives you cold contacts with no context. We build a fresh, verified list, write personalized outreach, and run the entire campaign for you — so leads arrive already warmed up.</div>
-    </div>
+  </div>
+  <div class="about-body">
+    <p>Dravix Works is a digital services studio built for speed and results. We combine strategic thinking with fast execution to deliver premium output across hiring, automation, content, leads, and careers.</p>
+    <p>Whether you're a business looking to scale, a professional leveling up your brand, or a company that needs qualified leads — we've got a service line built for you.</p>
+    <p>Built in Houston, TX. Delivered everywhere.</p>
   </div>
 </section>
 
-<!-- CTA -->
-<section class="cta-section">
-  <div class="cta-glow"></div>
-  <h2 class="cta-title">Ready to fill<br>your pipeline?</h2>
-  <p class="cta-sub">Get a free quote in 24 hours. No commitment required.</p>
-  <a href="#quote" class="btn-gold">Get a Free Quote →</a>
+<!-- CONTACT -->
+<section class="contact-section" id="contact">
+  <h2 class="contact-title">Ready to work?</h2>
+  <p class="contact-sub">Drop us a line and we'll get back to you within 24 hours.</p>
+  <a href="mailto:dravixworks@gmail.com" class="contact-email">dravixworks@gmail.com</a>
 </section>
 
 <footer>
@@ -375,27 +275,5 @@ footer{padding:32px 48px;border-top:1px solid var(--gray2);display:flex;align-it
   <div>Built in Houston, TX.</div>
 </footer>
 
-<script>
-function submitQuote() {
-  const name = document.getElementById('qName').value.trim();
-  const email = document.getElementById('qEmail').value.trim();
-  const industry = document.getElementById('qIndustry').value;
-  const location = document.getElementById('qLocation').value.trim();
-  const customer = document.getElementById('qCustomer').value.trim();
-  if (!name || !email || !industry || !location) {
-    document.getElementById('quoteMsg').innerHTML = '<div style="background:rgba(255,80,80,0.08);border-left:2px solid #f55;padding:10px 14px;margin-bottom:16px;font-size:0.65rem;color:#f99;">Please fill in all required fields.</div>';
-    return;
-  }
-  window.location.href = 'mailto:dravixworks@gmail.com?subject=Dravix Leads Quote Request — ' + encodeURIComponent(industry) + '&body=' + encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\nIndustry: ' + industry + '\nLocation: ' + location + '\nIdeal Customer: ' + customer);
-  document.getElementById('quoteMsg').innerHTML = '<div style="background:rgba(200,168,75,0.08);border-left:2px solid #c8a84b;padding:10px 14px;margin-bottom:16px;font-size:0.65rem;color:#c8a84b;">Opening your email... We will reply within 24 hours!</div>';
-}
-
-function toggleFaq(el) {
-  const item = el.parentElement;
-  const isOpen = item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-  if (!isOpen) item.classList.add('open');
-}
-</script>
 </body>
 </html>
