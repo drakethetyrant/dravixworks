@@ -4,276 +4,980 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Dravix Works — Built Different. Delivered Fast.</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-:root{--black:#080808;--white:#f5f2ee;--gold:#c8a84b;--gold2:#e8c96a;--gray:#2a2a2a;--gray1:#111;--gray2:#1c1c1c;--mid:#555;}
+:root {
+  --black: #070707;
+  --white: #f4f1ec;
+  --cream: #ede8df;
+  --gold: #c8a84b;
+  --gold2: #e8c96a;
+  --gold-dim: rgba(200,168,75,0.12);
+  --gray1: #111;
+  --gray2: #1c1c1c;
+  --gray3: #2a2a2a;
+  --mid: #555;
+  --light: #888;
+}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{background:var(--black);color:var(--white);font-family:'DM Mono',monospace;overflow-x:hidden;}
-::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-thumb{background:var(--gold);}
+body{background:var(--black);color:var(--white);font-family:'DM Mono',monospace;overflow-x:hidden;min-height:100vh;}
 
-nav{position:fixed;top:0;left:0;right:0;padding:24px 48px;display:flex;align-items:center;justify-content:space-between;z-index:50;background:rgba(8,8,8,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(200,168,75,0.1);}
-.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;letter-spacing:0.08em;color:var(--white);text-decoration:none;}
-.logo span{color:var(--gold);}
-.nav-links{display:flex;gap:32px;list-style:none;}
-.nav-links a{font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color 0.2s;}
-.nav-links a:hover{color:var(--gold);}
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--black);}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px;}
 
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:0 48px 80px;position:relative;overflow:hidden;}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 70% 40%,rgba(200,168,75,0.07) 0%,transparent 70%);pointer-events:none;}
-.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(200,168,75,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(200,168,75,0.025) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;}
-.hero-eyebrow{font-size:0.62rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;}
-.hero-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(3.5rem,9vw,8rem);line-height:0.93;letter-spacing:-0.02em;max-width:900px;}
-.hero-title em{color:var(--gold);font-style:italic;}
-.hero-sub{margin-top:32px;font-size:0.78rem;color:var(--mid);max-width:400px;line-height:1.9;}
-.hero-cta{margin-top:40px;display:flex;align-items:center;gap:20px;}
-.btn-primary{font-family:'Syne',sans-serif;font-weight:700;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;padding:16px 32px;background:var(--gold);color:var(--black);border:none;cursor:pointer;text-decoration:none;display:inline-block;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));transition:background 0.2s;}
-.btn-primary:hover{background:var(--gold2);}
-.btn-ghost{font-size:0.68rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--mid);text-decoration:none;border-bottom:1px solid var(--gray);padding-bottom:2px;transition:all 0.2s;}
-.btn-ghost:hover{color:var(--white);border-color:var(--white);}
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(7,7,7,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(200,168,75,0.1);}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;letter-spacing:0.06em;color:var(--white);cursor:pointer;}
+.nav-logo span{color:var(--gold);}
+.nav-right{display:flex;align-items:center;gap:16px;}
+.nav-btn{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;padding:10px 20px;border:1px solid var(--gray3);background:transparent;color:var(--light);cursor:pointer;transition:all 0.2s;}
+.nav-btn:hover{border-color:var(--gold);color:var(--gold);}
+.nav-btn.primary{background:var(--gold);color:var(--black);border-color:var(--gold);font-weight:500;}
+.nav-btn.primary:hover{background:var(--gold2);}
+.user-pill{display:flex;align-items:center;gap:10px;font-size:0.65rem;color:var(--light);letter-spacing:0.1em;}
+.user-dot{width:8px;height:8px;background:var(--gold);border-radius:50%;}
 
-.ticker{border-top:1px solid var(--gray2);border-bottom:1px solid var(--gray2);overflow:hidden;padding:13px 0;background:var(--gray1);}
-.ticker-inner{display:flex;white-space:nowrap;animation:ticker 22s linear infinite;}
-.ticker-item{font-size:0.62rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--mid);padding:0 44px;}
-.ticker-item span{color:var(--gold);margin-right:8px;}
+/* PAGES */
+.page{display:none;min-height:100vh;padding-top:80px;}
+.page.active{display:block;}
+
+/* HERO */
+.hero{min-height:calc(100vh - 80px);display:flex;flex-direction:column;justify-content:center;padding:80px 48px;position:relative;overflow:hidden;}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(200,168,75,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(200,168,75,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;}
+.hero-glow{position:absolute;top:20%;right:10%;width:500px;height:500px;background:radial-gradient(circle,rgba(200,168,75,0.06) 0%,transparent 70%);pointer-events:none;}
+.hero-tag{font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:28px;display:flex;align-items:center;gap:12px;}
+.hero-tag::before{content:'';width:32px;height:1px;background:var(--gold);}
+.hero-h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(3rem,8vw,7rem);line-height:0.92;letter-spacing:-0.03em;max-width:800px;}
+.hero-h1 em{color:var(--gold);font-style:italic;}
+.hero-sub{margin-top:32px;font-size:0.78rem;color:var(--mid);max-width:420px;line-height:1.9;}
+.hero-actions{margin-top:48px;display:flex;gap:16px;flex-wrap:wrap;}
+.btn{font-family:'Syne',sans-serif;font-weight:700;font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;padding:16px 32px;border:none;cursor:pointer;transition:all 0.2s;text-decoration:none;display:inline-block;}
+.btn-gold{background:var(--gold);color:var(--black);clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-2px);}
+.btn-outline{background:transparent;color:var(--white);border:1px solid var(--gray3);}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);}
+.hero-stats{margin-top:80px;display:flex;gap:48px;border-top:1px solid var(--gray3);padding-top:32px;}
+.hstat .n{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--gold);}
+.hstat .l{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--mid);margin-top:4px;}
+
+/* AUTH MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--gray1);border:1px solid var(--gray3);width:100%;max-width:440px;padding:48px;position:relative;}
+.modal-close{position:absolute;top:20px;right:20px;background:none;border:none;color:var(--mid);cursor:pointer;font-size:1.2rem;}
+.modal-close:hover{color:var(--white);}
+.modal-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;margin-bottom:8px;}
+.modal-sub{font-size:0.68rem;color:var(--mid);margin-bottom:32px;line-height:1.8;}
+.tab-row{display:flex;gap:0;margin-bottom:28px;border:1px solid var(--gray3);}
+.tab{flex:1;padding:10px;text-align:center;font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;background:transparent;border:none;color:var(--mid);cursor:pointer;transition:all 0.2s;}
+.tab.active{background:var(--gold);color:var(--black);font-weight:500;}
+.form-group{margin-bottom:16px;}
+.form-label{font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--light);display:block;margin-bottom:8px;}
+.form-input{width:100%;background:var(--gray2);border:1px solid var(--gray3);color:var(--white);font-family:'DM Mono',monospace;font-size:0.75rem;padding:12px 16px;outline:none;transition:border-color 0.2s;}
+.form-input:focus{border-color:var(--gold);}
+.form-input::placeholder{color:var(--mid);}
+.form-select{width:100%;background:var(--gray2);border:1px solid var(--gray3);color:var(--white);font-family:'DM Mono',monospace;font-size:0.75rem;padding:12px 16px;outline:none;appearance:none;}
+.form-select option{background:var(--gray2);}
+.btn-full{width:100%;padding:14px;margin-top:8px;}
+.form-switch{text-align:center;margin-top:20px;font-size:0.65rem;color:var(--mid);}
+.form-switch a{color:var(--gold);cursor:pointer;text-decoration:none;}
+.msg{font-size:0.65rem;padding:10px 14px;margin-bottom:16px;border-left:2px solid;}
+.msg.error{background:rgba(255,80,80,0.08);border-color:#f55;color:#f99;}
+.msg.success{background:rgba(200,168,75,0.08);border-color:var(--gold);color:var(--gold);}
+
+/* DASHBOARD */
+.dash{padding:40px 48px;}
+.dash-header{margin-bottom:40px;}
+.dash-greeting{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;}
+.dash-greeting span{color:var(--gold);}
+.dash-sub{font-size:0.68rem;color:var(--mid);margin-top:6px;letter-spacing:0.05em;}
+.dash-grid{display:grid;grid-template-columns:300px 1fr;gap:24px;}
+.panel{background:var(--gray1);border:1px solid var(--gray3);padding:28px;}
+.panel-title{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;gap:8px;}
+.panel-title::after{content:'';flex:1;height:1px;background:var(--gray3);}
+
+/* PROFILE */
+.profile-avatar{width:64px;height:64px;background:var(--gold-dim);border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--gold);margin-bottom:16px;}
+.profile-name{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:4px;}
+.profile-role{font-size:0.62rem;color:var(--gold);letter-spacing:0.1em;text-transform:uppercase;}
+.profile-stat{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--gray3);font-size:0.65rem;}
+.profile-stat:last-child{border-bottom:none;}
+.profile-stat .key{color:var(--mid);}
+.profile-stat .val{color:var(--white);}
+.edit-btn{width:100%;margin-top:16px;padding:10px;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;background:transparent;border:1px solid var(--gray3);color:var(--light);cursor:pointer;font-family:'DM Mono',monospace;transition:all 0.2s;}
+.edit-btn:hover{border-color:var(--gold);color:var(--gold);}
+
+/* JOBS */
+.jobs-toolbar{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;}
+.search-box{flex:1;min-width:200px;background:var(--gray2);border:1px solid var(--gray3);color:var(--white);font-family:'DM Mono',monospace;font-size:0.72rem;padding:10px 16px;outline:none;}
+.search-box:focus{border-color:var(--gold);}
+.filter-select{background:var(--gray2);border:1px solid var(--gray3);color:var(--light);font-family:'DM Mono',monospace;font-size:0.65rem;padding:10px 14px;outline:none;letter-spacing:0.08em;}
+.jobs-list{display:flex;flex-direction:column;gap:2px;}
+.job-card{background:var(--gray2);border:1px solid var(--gray3);padding:24px 28px;display:flex;align-items:center;justify-content:space-between;gap:20px;transition:all 0.2s;cursor:pointer;}
+.job-card:hover{background:var(--gray3);border-color:var(--gold);}
+.job-left{}
+.job-title{font-family:'Syne',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:6px;}
+.job-company{font-size:0.65rem;color:var(--gold);letter-spacing:0.08em;margin-bottom:10px;}
+.job-tags{display:flex;gap:8px;flex-wrap:wrap;}
+.tag{font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--gray3);color:var(--mid);}
+.tag.gold{border-color:rgba(200,168,75,0.3);color:var(--gold);}
+.job-right{text-align:right;flex-shrink:0;}
+.job-salary{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:var(--gold);}
+.job-posted{font-size:0.58rem;color:var(--mid);margin-top:4px;letter-spacing:0.08em;}
+.apply-btn{margin-top:12px;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;padding:8px 16px;background:var(--gold);color:var(--black);border:none;cursor:pointer;font-family:'Syne',sans-serif;font-weight:700;transition:background 0.2s;}
+.apply-btn:hover{background:var(--gold2);}
+
+/* POST JOB (company) */
+.post-form{max-width:600px;}
+.section-head{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;margin-bottom:24px;}
+
+/* CANDIDATES */
+.cand-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;}
+.cand-card{background:var(--gray2);border:1px solid var(--gray3);padding:24px;transition:all 0.2s;}
+.cand-card:hover{border-color:var(--gold);}
+.cand-avatar{width:44px;height:44px;background:var(--gold-dim);border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;color:var(--gold);margin-bottom:14px;}
+.cand-name{font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;margin-bottom:4px;}
+.cand-role{font-size:0.62rem;color:var(--gold);letter-spacing:0.08em;margin-bottom:12px;}
+.cand-detail{font-size:0.62rem;color:var(--mid);line-height:1.8;}
+.contact-btn{width:100%;margin-top:16px;padding:9px;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;background:transparent;border:1px solid var(--gold);color:var(--gold);cursor:pointer;font-family:'DM Mono',monospace;transition:all 0.2s;}
+.contact-btn:hover{background:var(--gold);color:var(--black);}
+
+/* EMPTY STATE */
+.empty{text-align:center;padding:60px 20px;color:var(--mid);}
+.empty-icon{font-size:2rem;margin-bottom:12px;opacity:0.3;}
+.empty-text{font-size:0.72rem;line-height:1.8;}
+
+/* TOAST */
+.toast{position:fixed;bottom:32px;right:32px;background:var(--gray2);border:1px solid var(--gold);padding:14px 20px;font-size:0.68rem;color:var(--gold);letter-spacing:0.08em;z-index:300;transform:translateY(80px);opacity:0;transition:all 0.3s;}
+.toast.show{transform:translateY(0);opacity:1;}
+
+/* LOADING */
+.loader{display:flex;align-items:center;justify-content:center;padding:40px;gap:8px;}
+.loader-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;animation:bounce 1.2s infinite;}
+.loader-dot:nth-child(2){animation-delay:0.2s;}
+.loader-dot:nth-child(3){animation-delay:0.4s;}
 @keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-
-.section{padding:100px 48px;}
-.section-label{font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:56px;display:flex;align-items:center;gap:16px;}
-.section-label::after{content:'';flex:1;max-width:80px;height:1px;background:var(--gold);opacity:0.4;}
-
-.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2px;}
-.service-card{background:var(--gray1);border:1px solid var(--gray2);padding:40px 36px;transition:background 0.3s;}
-.service-card:hover{background:#1a1a1a;}
-.service-num{font-size:0.58rem;letter-spacing:0.2em;color:var(--gold);opacity:0.6;margin-bottom:20px;}
-.service-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;margin-bottom:14px;line-height:1.3;}
-.service-desc{font-size:0.7rem;color:var(--mid);line-height:1.9;margin-bottom:28px;}
-.service-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
-.service-tag{font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;padding:5px 12px;border:1px solid var(--gray);color:var(--mid);}
-.service-btn{font-family:'Syne',sans-serif;font-weight:700;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;padding:10px 20px;background:var(--gold);color:var(--black);text-decoration:none;display:inline-block;transition:background 0.2s;}
-.service-btn:hover{background:var(--gold2);}
-.service-btn.outline{background:transparent;color:var(--gold);border:1px solid var(--gold);}
-.service-btn.outline:hover{background:var(--gold);color:var(--black);}
-
-/* CAREER PACKAGE */
-.career-section{padding:100px 48px;background:var(--gray1);border-top:1px solid var(--gray2);border-bottom:1px solid var(--gray2);}
-.career-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1100px;}
-.career-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2rem,4vw,3.2rem);line-height:1.05;letter-spacing:-0.02em;margin-bottom:20px;}
-.career-title span{color:var(--gold);}
-.career-body{font-size:0.72rem;color:var(--mid);line-height:2;margin-bottom:32px;}
-.checklist{display:flex;flex-direction:column;gap:12px;margin-bottom:40px;}
-.checklist li{font-size:0.7rem;color:#888;display:flex;align-items:center;gap:14px;list-style:none;}
-.checklist li::before{content:'✓';color:var(--gold);flex-shrink:0;}
-.stats-panel{background:var(--black);border:1px solid var(--gray2);padding:44px;position:relative;}
-.stats-panel::before{content:'';position:absolute;top:-1px;left:0;right:0;height:3px;background:linear-gradient(to right,var(--gold),transparent);}
-.stat-item{margin-bottom:28px;padding-bottom:28px;border-bottom:1px solid var(--gray2);}
-.stat-item:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
-.stat-num{font-family:'Syne',sans-serif;font-size:2.6rem;font-weight:800;color:var(--gold);line-height:1;margin-bottom:6px;}
-.stat-label{font-size:0.62rem;color:var(--mid);line-height:1.7;}
-
-/* ABOUT */
-.about-section{padding:100px 48px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;border-top:1px solid var(--gray2);}
-.about-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2rem,4vw,3.5rem);line-height:1.05;letter-spacing:-0.02em;}
-.about-title span{color:var(--gold);}
-.about-stats{display:flex;gap:40px;margin-top:40px;}
-.astat .n{font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;color:var(--gold);}
-.astat .l{font-size:0.58rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--mid);margin-top:4px;}
-.about-body{font-size:0.72rem;color:var(--mid);line-height:2;}
-.about-body p+p{margin-top:18px;}
-
-/* CONTACT */
-.contact-section{padding:120px 48px;border-top:1px solid var(--gray2);text-align:center;}
-.contact-title{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.5rem,6vw,5rem);letter-spacing:-0.02em;margin-bottom:20px;}
-.contact-sub{font-size:0.72rem;color:var(--mid);margin-bottom:40px;}
-.contact-email{font-family:'Syne',sans-serif;font-size:clamp(1rem,2.5vw,1.5rem);font-weight:700;color:var(--gold);text-decoration:none;border-bottom:2px solid var(--gold);padding-bottom:4px;}
-.contact-email:hover{opacity:0.7;}
-
-footer{padding:36px 48px;border-top:1px solid var(--gray2);display:flex;align-items:center;justify-content:space-between;font-size:0.58rem;color:var(--mid);flex-wrap:wrap;gap:16px;}
-.footer-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;color:var(--white);}
-.footer-logo span{color:var(--gold);}
+@keyframes bounce{0%,80%,100%{transform:translateY(0);}40%{transform:translateY(-10px);}}
 
 @media(max-width:768px){
-  nav{padding:18px 20px;}.nav-links{display:none;}
-  .hero{padding:0 20px 60px;}
-  .section{padding:60px 20px;}
-  .career-section{padding:60px 20px;}.career-grid{grid-template-columns:1fr;gap:40px;}
-  .about-section{grid-template-columns:1fr;gap:40px;padding:60px 20px;}
-  .contact-section{padding:80px 20px;}
-  footer{padding:28px 20px;flex-direction:column;text-align:center;}
+  nav{padding:16px 20px;}
+  .hero{padding:48px 20px;}
+  .dash{padding:24px 20px;}
+  .dash-grid{grid-template-columns:1fr;}
+  .hero-stats{gap:24px;flex-wrap:wrap;}
 }
 </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
-  <a href="#" class="logo">DRAVIX<span>.</span>WORKS</a>
-  <ul class="nav-links">
-    <li><a href="#services">Services</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
+  <div class="nav-logo" onclick="showPage('home')">DRAVIX<span>.</span>WORKS</div>
+  <div class="nav-right" id="navRight">
+    <button class="nav-btn" onclick="openAuth('login')">Log In</button>
+    <button class="nav-btn primary" onclick="openAuth('signup')">Join Free</button>
+  </div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
-  <p class="hero-eyebrow">Digital Services Studio — Houston, TX</p>
-  <h1 class="hero-title">Built<br><em>different.</em><br>Delivered fast.</h1>
-  <p class="hero-sub">Hiring, automation, content, leads, and careers — all under one roof. Built for results, delivered at speed.</p>
-  <div class="hero-cta">
-    <a href="#services" class="btn-primary">Explore Services</a>
-    <a href="#contact" class="btn-ghost">Get in touch →</a>
-  </div>
-</section>
+<!-- HOME PAGE -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow"></div>
+    <p class="hero-tag">Houston, TX — Built for the next generation</p>
+    <h1 class="hero-h1">Skip the<br>line. Get<br><em>hired direct.</em></h1>
+    <p class="hero-sub">No recruiters. No middlemen. Connect directly with companies looking for entry-level talent in tech, business, and beyond.</p>
+    <div class="hero-actions">
+      <button class="btn btn-gold" onclick="openAuth('signup')">Find a Job — Free</button>
+      <button class="btn btn-outline" onclick="openAuth('signup-company')">Post Roles Free →</button>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="n" id="statJobs">0</div><div class="l">Open Roles</div></div>
+      <div class="hstat"><div class="n" id="statCands">0</div><div class="l">Candidates</div></div>
+      <div class="hstat"><div class="n">Free</div><div class="l">Founding Launch</div></div>
+      <div class="hstat"><div class="n">Direct</div><div class="l">No middleman</div></div>
+    </div>
+  </section>
+</div>
 
-<!-- TICKER -->
-<div class="ticker">
-  <div class="ticker-inner">
-    <span class="ticker-item"><span>✦</span>Resume Rewrites</span>
-    <span class="ticker-item"><span>✦</span>Direct Hiring</span>
-    <span class="ticker-item"><span>✦</span>Business Automation</span>
-    <span class="ticker-item"><span>✦</span>Lead Generation</span>
-    <span class="ticker-item"><span>✦</span>SEO Content</span>
-    <span class="ticker-item"><span>✦</span>AI Headshots</span>
-    <span class="ticker-item"><span>✦</span>Resume Rewrites</span>
-    <span class="ticker-item"><span>✦</span>Direct Hiring</span>
-    <span class="ticker-item"><span>✦</span>Business Automation</span>
-    <span class="ticker-item"><span>✦</span>Lead Generation</span>
-    <span class="ticker-item"><span>✦</span>SEO Content</span>
-    <span class="ticker-item"><span>✦</span>AI Headshots</span>
+<!-- SEEKER DASHBOARD -->
+<div class="page" id="page-seeker">
+  <div class="dash">
+    <div class="dash-header" style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+      <div>
+        <div class="dash-greeting">Welcome back, <span id="seekerName">—</span></div>
+        <div class="dash-sub">Browse open roles and apply directly to companies.</div>
+      </div>
+      <button class="nav-btn" onclick="doLogout()">Log Out</button>
+    </div>
+    <div style="display:flex;gap:12px;margin-bottom:32px;flex-wrap:wrap;">
+      <button class="btn btn-gold" onclick="showSeekerTab('jobs')">Browse Jobs</button>
+      <button class="btn btn-outline" onclick="showSeekerTab('applications')">My Applications</button>
+      <button class="btn btn-outline" onclick="showSeekerTab('profile')">My Profile</button>
+    </div>
+    <div id="stab-jobs">
+    <div class="dash-grid">
+      <div>
+        <div class="panel">
+          <div class="panel-title">Your Profile</div>
+          <div class="profile-avatar" id="seekerAvatar">D</div>
+          <div class="profile-name" id="seekerNameFull">—</div>
+          <div class="profile-role" id="seekerRoleLabel">Job Seeker</div>
+          <div style="margin-top:16px;">
+            <div class="profile-stat"><span class="key">Major</span><span class="val" id="pMajor">—</span></div>
+            <div class="profile-stat"><span class="key">Role Wanted</span><span class="val" id="pRole">—</span></div>
+            <div class="profile-stat"><span class="key">Location</span><span class="val" id="pLocation">—</span></div>
+            <div class="profile-stat"><span class="key">Status</span><span class="val" style="color:var(--gold);">Active</span></div>
+          </div>
+          <button class="edit-btn" onclick="showEditProfile()">Edit Profile</button>
+        </div>
+      </div>
+      <div>
+        <div class="panel">
+          <div class="panel-title">Open Roles</div>
+          <div class="jobs-toolbar">
+            <input class="search-box" placeholder="Search roles, companies..." id="jobSearch" oninput="filterJobs()"/>
+            <select class="filter-select" id="jobFilter" onchange="filterJobs()">
+              <option value="">All Types</option>
+              <option value="tech">Tech</option>
+              <option value="business">Business</option>
+              <option value="sales">Sales</option>
+              <option value="marketing">Marketing</option>
+              <option value="finance">Finance</option>
+            </select>
+          </div>
+          <div class="jobs-list" id="jobsList">
+            <div class="loader"><div class="loader-dot"></div><div class="loader-dot"></div><div class="loader-dot"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- SERVICES -->
-<section class="section" id="services">
-  <div class="section-label">What We Do</div>
-  <div class="services-grid">
-
-    <div class="service-card">
-      <div class="service-num">01</div>
-      <div class="service-title">Dravix Connect — Direct Hiring</div>
-      <div class="service-desc">Skip the job board. Connect directly with Houston companies hiring entry-level talent in tech, business, and sales. Free for job seekers. $29 for companies.</div>
-      <div class="service-footer">
-        <span class="service-tag">Hiring</span>
-        <a href="https://dravixconnects.netlify.app" target="_blank" class="service-btn">Open Platform →</a>
+    <!-- My Applications Tab -->
+    <div id="stab-applications" style="display:none;">
+      <div class="panel">
+        <div class="panel-title">My Applications</div>
+        <div id="myApplicationsList">
+          <div class="loader"><div class="loader-dot"></div><div class="loader-dot"></div><div class="loader-dot"></div></div>
+        </div>
       </div>
     </div>
 
-    <div class="service-card">
-      <div class="service-num">02</div>
-      <div class="service-title">Resume & LinkedIn Rewrites</div>
-      <div class="service-desc">Upload your resume, get a professionally rewritten version back in under 10 minutes. ATS optimized, recruiter tested, delivered fast.</div>
-      <div class="service-footer">
-        <span class="service-tag">Career</span>
-        <a href="https://buy.stripe.com/bJecMXfMQcjQ8skbeS3F600" target="_blank" class="service-btn">Get Rewrite — $75 →</a>
-      </div>
-    </div>
-
-    <div class="service-card">
-      <div class="service-num">03</div>
-      <div class="service-title">Dravix Automate</div>
-      <div class="service-desc">We build your entire business automation system — lead capture, email sequences, CRM flows, and payment confirmations. Your business runs itself.</div>
-      <div class="service-footer">
-        <span class="service-tag">Automation</span>
-        <a href="https://dravixautomate.netlify.app" target="_blank" class="service-btn">Open Platform →</a>
-      </div>
-    </div>
-
-    <div class="service-card">
-      <div class="service-num">04</div>
-      <div class="service-title">Dravix Leads</div>
-      <div class="service-desc">Personalized cold outreach at scale for roofing, solar, real estate, and insurance businesses. We build the list, write the copy, and deliver qualified leads.</div>
-      <div class="service-footer">
-        <span class="service-tag">Growth</span>
-        <a href="https://drakethetyrant.github.io/DRAVIX-LEADS/" target="_blank" class="service-btn">Open Platform →</a>
-      </div>
-    </div>
-
-    <div class="service-card">
-      <div class="service-num">05</div>
-      <div class="service-title">Dravix Content</div>
-      <div class="service-desc">LinkedIn ghostwriting, newsletters, YouTube scripts, and SEO articles — written in your voice. Stay visible, build authority, and attract clients without lifting a pen.</div>
-      <div class="service-footer">
-        <span class="service-tag">Content</span>
-        <a href="https://drakethetyrant.github.io/DRAVIXCONTENT/" target="_blank" class="service-btn">Open Platform →</a>
-      </div>
-    </div>
-
-    <div class="service-card">
-      <div class="service-num">06</div>
-      <div class="service-title">AI Headshot Studio</div>
-      <div class="service-desc">Upload 10 selfies, receive studio-quality professional headshots. No camera, no photographer, no appointment. Delivered same day.</div>
-      <div class="service-footer">
-        <span class="service-tag">Studio</span>
-        <a href="mailto:dravixworks@gmail.com?subject=Headshot Inquiry" class="service-btn outline">Get a Quote →</a>
+    <!-- Profile Tab -->
+    <div id="stab-profile" style="display:none;">
+      <div class="panel" style="max-width:600px;">
+        <div class="panel-title">My Profile</div>
+        <div id="profileMsg"></div>
+        <div class="form-group"><label class="form-label">Full Name</label><input class="form-input" id="editName"/></div>
+        <div class="form-group"><label class="form-label">Major / Field</label><input class="form-input" id="editMajor"/></div>
+        <div class="form-group"><label class="form-label">Role Wanted</label>
+          <select class="form-input form-select" id="editRole">
+            <option>Software Engineer</option>
+            <option>Data Analyst</option>
+            <option>Business Analyst</option>
+            <option>Marketing Coordinator</option>
+            <option>Sales Development Rep</option>
+            <option>HR Coordinator</option>
+            <option>Finance Analyst</option>
+            <option>Project Manager</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Location</label><input class="form-input" id="editLocation"/></div>
+        <div class="form-group">
+          <label class="form-label">Resume (PDF or Word)</label>
+          <input type="file" id="resumeFile" accept=".pdf,.doc,.docx" class="form-input" style="padding:8px;cursor:pointer;"/>
+          <div id="resumeStatus" style="font-size:0.62rem;color:var(--gold);margin-top:8px;"></div>
+        </div>
+        <button class="btn btn-gold btn-full" onclick="saveProfile()">Save Profile →</button>
       </div>
     </div>
 
   </div>
-</section>
+</div>
 
-<!-- CAREER PACKAGE -->
-<section class="career-section">
-  <div class="section-label">Featured Package</div>
-  <div class="career-grid">
-    <div>
-      <h2 class="career-title">The Career<br><span>Package.</span></h2>
-      <p class="career-body">Everything you need to land your next job — in one shot. Resume rewritten, LinkedIn optimized, and directly applied to 10 real Houston roles on Dravix Connect. Done in under 24 hours.</p>
-      <ul class="checklist">
-        <li>ATS-optimized resume rewrite</li>
-        <li>Full LinkedIn profile overhaul</li>
-        <li>Direct applications to 10 Houston roles</li>
-        <li>Delivered in under 24 hours</li>
-      </ul>
-      <a href="https://buy.stripe.com/fZueV56cg6Zw380fv83F602" target="_blank" class="btn-primary">Get the Package — $99 →</a>
+<!-- COMPANY DASHBOARD -->
+<div class="page" id="page-company">
+  <div class="dash">
+    <div class="dash-header" style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+      <div>
+        <div class="dash-greeting">Welcome, <span id="companyName">—</span></div>
+        <div class="dash-sub">Post roles and browse candidates directly.</div>
+      </div>
+      <button class="nav-btn" onclick="doLogout()">Log Out</button>
     </div>
-    <div class="stats-panel">
-      <div class="stat-item">
-        <div class="stat-num">7%</div>
-        <div class="stat-label">higher average salary for professionals with expert-written resumes</div>
+    <div style="display:flex;gap:16px;margin-bottom:32px;flex-wrap:wrap;">
+      <button class="btn btn-gold" onclick="showCompanyTab('post')">+ Post a Role</button>
+      <button class="btn btn-outline" onclick="showCompanyTab('candidates')">Browse Candidates</button>
+      <button class="btn btn-outline" onclick="showCompanyTab('myjobs')">My Postings</button>
+      <button class="btn btn-outline" onclick="showCompanyTab('applications')">Applications</button>
+    </div>
+
+    <!-- Post Job -->
+    <div id="tab-post" class="panel post-form">
+      <div class="panel-title">Post a New Role</div>
+      <div id="postMsg"></div>
+      <div class="form-group"><label class="form-label">Job Title</label><input class="form-input" id="jobTitle" placeholder="e.g. Junior Software Engineer"/></div>
+      <div class="form-group"><label class="form-label">Department / Type</label>
+        <select class="form-input form-select" id="jobType">
+          <option value="tech">Tech</option>
+          <option value="business">Business</option>
+          <option value="sales">Sales</option>
+          <option value="marketing">Marketing</option>
+          <option value="finance">Finance</option>
+        </select>
       </div>
-      <div class="stat-item">
-        <div class="stat-num">24hr</div>
-        <div class="stat-label">turnaround — faster than any other service on the market</div>
+      <div class="form-group"><label class="form-label">Location</label><input class="form-input" id="jobLocation" placeholder="e.g. Houston, TX (Remote OK)"/></div>
+      <div class="form-group"><label class="form-label">Salary Range</label><input class="form-input" id="jobSalary" placeholder="e.g. $55,000 – $70,000"/></div>
+      <div class="form-group"><label class="form-label">Description</label><textarea class="form-input" id="jobDesc" rows="4" placeholder="What will this person do? What skills do you need?"></textarea></div>
+      <div class="form-group"><label class="form-label">Contact Email (for applicants)</label><input class="form-input" id="jobContact" placeholder="hiring@yourcompany.com"/></div>
+      <div class="form-group">
+        <label class="form-label">Screening Questions (optional)</label>
+        <div id="screeningQs">
+          <input class="form-input" style="margin-bottom:8px;" placeholder="e.g. How many years of experience do you have?" id="sq1"/>
+          <input class="form-input" style="margin-bottom:8px;" placeholder="e.g. Are you available to start immediately?" id="sq2"/>
+          <input class="form-input" placeholder="e.g. Do you have a valid drivers license?" id="sq3"/>
+        </div>
+        <div style="font-size:0.6rem;color:var(--mid);margin-top:8px;">Applicants will answer these before submitting.</div>
       </div>
-      <div class="stat-item">
-        <div class="stat-num">3-in-1</div>
-        <div class="stat-label">resume + LinkedIn + direct applications — nobody else does all three</div>
+      <div style="background:rgba(200,168,75,0.06);border:1px solid rgba(200,168,75,0.2);padding:12px 16px;margin-bottom:16px;font-size:0.62rem;color:var(--gold);letter-spacing:0.08em;">⚡ FOUNDING EMPLOYER — Post roles free through 2026</div>
+      <button class="btn btn-gold btn-full" onclick="postJob()">Publish Role Free →</button>
+    </div>
+
+    <!-- Candidates -->
+    <div id="tab-candidates" style="display:none;">
+      <div class="panel-title" style="font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;">Active Candidates</div>
+      <div class="cand-grid" id="candGrid">
+        <div class="loader"><div class="loader-dot"></div><div class="loader-dot"></div><div class="loader-dot"></div></div>
+      </div>
+    </div>
+
+    <!-- My Jobs -->
+    <div id="tab-myjobs" style="display:none;">
+      <div class="panel-title" style="font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;">Your Posted Roles</div>
+      <div class="jobs-list" id="myJobsList">
+        <div class="loader"><div class="loader-dot"></div><div class="loader-dot"></div><div class="loader-dot"></div></div>
+      </div>
+    </div>
+
+    <!-- Applications -->
+    <div id="tab-applications" style="display:none;">
+      <div class="panel-title" style="font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;">Candidate Applications</div>
+      <div id="applicationsList">
+        <div class="loader"><div class="loader-dot"></div><div class="loader-dot"></div><div class="loader-dot"></div></div>
       </div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- ABOUT -->
-<section class="about-section" id="about">
-  <div>
-    <h2 class="about-title">Fast output.<br><span>Real results.</span><br>Zero fluff.</h2>
-    <div class="about-stats">
-      <div class="astat"><div class="n">6+</div><div class="l">Service lines</div></div>
-      <div class="astat"><div class="n">24hr</div><div class="l">Turnaround</div></div>
-      <div class="astat"><div class="n">100%</div><div class="l">Delivered</div></div>
+<!-- AUTH MODAL -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeAuth()">✕</button>
+    <div class="modal-title" id="authTitle">Join Dravix Connect</div>
+    <div class="modal-sub" id="authSub">Connect directly with employers. No middlemen.</div>
+    <div id="authMsg"></div>
+
+    <!-- Login -->
+    <div id="formLogin">
+      <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="loginEmail" type="email" placeholder="you@email.com"/></div>
+      <div class="form-group"><label class="form-label">Password</label><input class="form-input" id="loginPass" type="password" placeholder="••••••••"/></div>
+      <button class="btn btn-gold btn-full" onclick="doLogin()">Log In →</button>
+      <div class="form-switch">No account? <a onclick="openAuth('signup')">Sign up free</a></div>
+    </div>
+
+    <!-- Signup Seeker -->
+    <div id="formSignup" style="display:none;">
+      <div class="tab-row">
+        <button class="tab active" onclick="switchSignupType('seeker')">Job Seeker</button>
+        <button class="tab" onclick="switchSignupType('company')">Company</button>
+      </div>
+      <div id="seekerFields">
+        <div class="form-group"><label class="form-label">Full Name</label><input class="form-input" id="sName" placeholder="Drake Johnson"/></div>
+        <div class="form-group"><label class="form-label">Email</label><input class="form-input" id="sEmail" type="email" placeholder="you@email.com"/></div>
+        <div class="form-group"><label class="form-label">Password</label><input class="form-input" id="sPass" type="password" placeholder="••••••••"/></div>
+        <div class="form-group"><label class="form-label">Major / Field</label><input class="form-input" id="sMajor" placeholder="e.g. Management Information Systems"/></div>
+        <div class="form-group"><label class="form-label">Role I Want</label>
+          <select class="form-input form-select" id="sRole">
+            <option>Software Engineer</option>
+            <option>Data Analyst</option>
+            <option>Business Analyst</option>
+            <option>Marketing Coordinator</option>
+            <option>Sales Development Rep</option>
+            <option>HR Coordinator</option>
+            <option>Finance Analyst</option>
+            <option>Project Manager</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group"><label class="form-label">Location</label><input class="form-input" id="sLocation" placeholder="Houston, TX"/></div>
+        <button class="btn btn-gold btn-full" onclick="doSignupSeeker()">Create Account →</button>
+      </div>
+      <div id="companyFields" style="display:none;">
+        <div class="form-group"><label class="form-label">Company Name</label><input class="form-input" id="cName" placeholder="Acme Corp"/></div>
+        <div class="form-group"><label class="form-label">Work Email</label><input class="form-input" id="cEmail" type="email" placeholder="you@company.com"/></div>
+        <div class="form-group"><label class="form-label">Password</label><input class="form-input" id="cPass" type="password" placeholder="••••••••"/></div>
+        <div class="form-group"><label class="form-label">Industry</label><input class="form-input" id="cIndustry" placeholder="e.g. Technology, Healthcare, Finance"/></div>
+        <div class="form-group"><label class="form-label">Location</label><input class="form-input" id="cLocation" placeholder="Houston, TX"/></div>
+        <button class="btn btn-gold btn-full" onclick="doSignupCompany()">Create Company Account →</button>
+      </div>
+      <div class="form-switch">Already have an account? <a onclick="openAuth('login')">Log in</a></div>
     </div>
   </div>
-  <div class="about-body">
-    <p>Dravix Works is a digital services studio built for speed and results. We combine strategic thinking with fast execution to deliver premium output across hiring, automation, content, leads, and careers.</p>
-    <p>Whether you're a business looking to scale, a professional leveling up your brand, or a company that needs qualified leads — we've got a service line built for you.</p>
-    <p>Built in Houston, TX. Delivered everywhere.</p>
+</div>
+
+
+<!-- APPLY MODAL -->
+<div class="modal-overlay" id="applyModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeApply()">✕</button>
+    <div class="modal-title">Apply Direct</div>
+    <div class="modal-sub" id="applyJobTitle">Applying for a role at —</div>
+    <div id="applyMsg"></div>
+    <div class="form-group"><label class="form-label">Your Name</label><input class="form-input" id="applyName" readonly/></div>
+    <div class="form-group"><label class="form-label">Your Email</label><input class="form-input" id="applyEmail" readonly/></div>
+    <div class="form-group"><label class="form-label">Major / Field</label><input class="form-input" id="applyMajor" readonly/></div>
+    <div id="screeningAnswersSection"></div>
+    <div class="form-group"><label class="form-label">Quick Message (optional)</label><textarea class="form-input" id="applyMessage" rows="3" placeholder="Why are you a great fit for this role?"></textarea></div>
+    <button class="btn btn-gold btn-full" onclick="submitApplication()">Submit Application →</button>
   </div>
-</section>
+</div>
 
-<!-- CONTACT -->
-<section class="contact-section" id="contact">
-  <h2 class="contact-title">Ready to work?</h2>
-  <p class="contact-sub">Drop us a line and we'll get back to you within 24 hours.</p>
-  <a href="mailto:dravixworks@gmail.com" class="contact-email">dravixworks@gmail.com</a>
-</section>
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
 
-<footer>
-  <div class="footer-logo">DRAVIX<span>.</span>WORKS</div>
-  <div>© 2025 Dravix Works. All rights reserved.</div>
-  <div>Built in Houston, TX.</div>
-</footer>
+<script>
+const SUPA_URL = 'https://lpcrznsbqqponjpjtfnn.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxwY3J6bnNicXFwb25qcGp0Zm5uIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA3MjI0MzcsImV4cCI6MjA5NjI5ODQzN30.mJeMsgerajsigJCtUyix-LOELooxMx57e4mRTztglSI';
+const { createClient } = supabase;
+const db = createClient(SUPA_URL, SUPA_KEY);
 
+let currentUser = null;
+let currentProfile = null;
+let allJobs = [];
+
+// INIT
+async function init() {
+  await setupTables();
+  const { data: { session } } = await db.auth.getSession();
+  if (session) {
+    currentUser = session.user;
+    await loadProfile();
+  }
+  loadStats();
+}
+
+async function setupTables() {
+  // Tables must exist in Supabase — we'll handle gracefully
+}
+
+// STATS
+async function loadStats() {
+  try {
+    const { count: jCount } = await db.from('jobs').select('*', { count: 'exact', head: true });
+    const { count: cCount } = await db.from('profiles').select('*', { count: 'exact', head: true }).eq('type', 'seeker');
+    animCount('statJobs', jCount || 0);
+    animCount('statCands', cCount || 0);
+  } catch(e) {}
+}
+
+function animCount(id, target) {
+  let n = 0;
+  const el = document.getElementById(id);
+  if (!el || target === 0) return;
+  const step = Math.ceil(target / 30);
+  const t = setInterval(() => {
+    n = Math.min(n + step, target);
+    el.textContent = n;
+    if (n >= target) clearInterval(t);
+  }, 40);
+}
+
+// PAGES
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+}
+
+// AUTH MODAL
+function openAuth(type) {
+  document.getElementById('authModal').classList.add('open');
+  document.getElementById('formLogin').style.display = 'none';
+  document.getElementById('formSignup').style.display = 'none';
+  clearMsg('authMsg');
+  if (type === 'login') {
+    document.getElementById('formLogin').style.display = 'block';
+    document.getElementById('authTitle').textContent = 'Welcome back';
+    document.getElementById('authSub').textContent = 'Log in to your account.';
+  } else {
+    document.getElementById('formSignup').style.display = 'block';
+    document.getElementById('authTitle').textContent = 'Join Dravix Connect';
+    document.getElementById('authSub').textContent = 'Free to join. Connect directly.';
+    if (type === 'signup-company') switchSignupType('company');
+    else switchSignupType('seeker');
+  }
+}
+
+function closeAuth() {
+  document.getElementById('authModal').classList.remove('open');
+}
+
+function switchSignupType(type) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  event && event.target && event.target.classList.add('active');
+  if (type === 'seeker') {
+    document.getElementById('seekerFields').style.display = 'block';
+    document.getElementById('companyFields').style.display = 'none';
+    document.querySelectorAll('.tab')[0].classList.add('active');
+    document.querySelectorAll('.tab')[1].classList.remove('active');
+  } else {
+    document.getElementById('seekerFields').style.display = 'none';
+    document.getElementById('companyFields').style.display = 'block';
+    document.querySelectorAll('.tab')[1].classList.add('active');
+    document.querySelectorAll('.tab')[0].classList.remove('active');
+  }
+}
+
+// LOGIN
+async function doLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  if (!email || !pass) return showMsg('authMsg', 'Fill in all fields.', 'error');
+  showMsg('authMsg', 'Logging in...', 'success');
+  const { data, error } = await db.auth.signInWithPassword({ email, password: pass });
+  if (error) return showMsg('authMsg', error.message, 'error');
+  currentUser = data.user;
+  const { data: profile, error: profErr } = await db.from('profiles').select('*').eq('id', currentUser.id).single();
+  if (profErr || !profile) return showMsg('authMsg', 'Profile not found. Try signing up again.', 'error');
+  currentProfile = profile;
+  updateNav();
+  closeAuth();
+  if (currentProfile.type === 'seeker') {
+    loadSeekerDash();
+    showPage('seeker');
+  } else {
+    loadCompanyDash();
+    showPage('company');
+  }
+}
+
+// SIGNUP SEEKER
+async function doSignupSeeker() {
+  const name = document.getElementById('sName').value.trim();
+  const email = document.getElementById('sEmail').value.trim();
+  const pass = document.getElementById('sPass').value;
+  const major = document.getElementById('sMajor').value.trim();
+  const role = document.getElementById('sRole').value;
+  const location = document.getElementById('sLocation').value.trim();
+  if (!name || !email || !pass) return showMsg('authMsg', 'Fill in all required fields.', 'error');
+  showMsg('authMsg', 'Creating your account...', 'success');
+  const { data, error } = await db.auth.signUp({ email, password: pass });
+  if (error) return showMsg('authMsg', error.message, 'error');
+  currentUser = data.user;
+  const profile = { id: currentUser.id, type: 'seeker', name, email, major, role_wanted: role, location, created_at: new Date().toISOString() };
+  await db.from('profiles').upsert(profile);
+  currentProfile = profile;
+  updateNav();
+  closeAuth();
+  toast('Welcome to Dravix Connect!');
+  loadSeekerDash();
+  showPage('seeker');
+}
+
+// SIGNUP COMPANY
+async function doSignupCompany() {
+  const name = document.getElementById('cName').value.trim();
+  const email = document.getElementById('cEmail').value.trim();
+  const pass = document.getElementById('cPass').value;
+  const industry = document.getElementById('cIndustry').value.trim();
+  const location = document.getElementById('cLocation').value.trim();
+  if (!name || !email || !pass) return showMsg('authMsg', 'Fill in all required fields.', 'error');
+  showMsg('authMsg', 'Creating company account...', 'success');
+  const { data, error } = await db.auth.signUp({ email, password: pass });
+  if (error) return showMsg('authMsg', error.message, 'error');
+  currentUser = data.user;
+  const profile = { id: currentUser.id, type: 'company', name, email, industry, location, created_at: new Date().toISOString() };
+  await db.from('profiles').upsert(profile);
+  currentProfile = profile;
+  updateNav();
+  closeAuth();
+  toast('Company account created!');
+  loadCompanyDash();
+  showPage('company');
+}
+
+// LOAD PROFILE & ROUTE
+async function loadProfile() {
+  if (!currentUser) return;
+  const { data } = await db.from('profiles').select('*').eq('id', currentUser.id).single();
+  currentProfile = data;
+  updateNav();
+  if (currentProfile) {
+    if (currentProfile.type === 'seeker') {
+      loadSeekerDash();
+      showPage('seeker');
+    } else {
+      loadCompanyDash();
+      showPage('company');
+    }
+  }
+}
+
+function updateNav() {
+  const nr = document.getElementById('navRight');
+  if (currentProfile) {
+    nr.innerHTML = `<div class="user-pill"><div class="user-dot"></div><span>${currentProfile.name}</span></div><button class="nav-btn" onclick="doLogout()">Log Out</button>`;
+  }
+}
+
+async function doLogout() {
+  await db.auth.signOut();
+  currentUser = null; currentProfile = null;
+  document.getElementById('navRight').innerHTML = `<button class="nav-btn" onclick="openAuth('login')">Log In</button><button class="nav-btn primary" onclick="openAuth('signup')">Join Free</button>`;
+  showPage('home');
+  toast('Logged out.');
+}
+
+// SEEKER DASHBOARD
+async function loadSeekerDash() {
+  const p = currentProfile;
+  document.getElementById('seekerName').textContent = p.name.split(' ')[0];
+  document.getElementById('seekerNameFull').textContent = p.name;
+  document.getElementById('seekerAvatar').textContent = p.name[0].toUpperCase();
+  document.getElementById('pMajor').textContent = p.major || '—';
+  document.getElementById('pRole').textContent = p.role_wanted || '—';
+  document.getElementById('pLocation').textContent = p.location || '—';
+  await loadJobs();
+}
+
+async function loadJobs() {
+  const { data, error } = await db.from('jobs').select('*').order('created_at', { ascending: false });
+  allJobs = data || [];
+  renderJobs(allJobs);
+}
+
+function filterJobs() {
+  const q = document.getElementById('jobSearch').value.toLowerCase();
+  const f = document.getElementById('jobFilter').value;
+  let filtered = allJobs;
+  if (q) filtered = filtered.filter(j => j.title?.toLowerCase().includes(q) || j.company_name?.toLowerCase().includes(q));
+  if (f) filtered = filtered.filter(j => j.type === f);
+  renderJobs(filtered);
+}
+
+function renderJobs(jobs) {
+  const el = document.getElementById('jobsList');
+  if (!jobs.length) {
+    el.innerHTML = `<div class="empty"><div class="empty-icon">◈</div><div class="empty-text">No roles posted yet.<br>Check back soon.</div></div>`;
+    return;
+  }
+  el.innerHTML = jobs.map(j => `
+    <div class="job-card">
+      <div class="job-left">
+        <div class="job-title">${j.title}</div>
+        <div class="job-company">${j.company_name}</div>
+        <div class="job-tags">
+          <span class="tag gold">${j.type}</span>
+          <span class="tag">${j.location}</span>
+        </div>
+      </div>
+      <div class="job-right">
+        <div class="job-salary">${j.salary || 'Competitive'}</div>
+        <div class="job-posted">${timeAgo(j.created_at)}</div>
+        <button class="apply-btn" onclick="applyJob('${j.id}','${j.title}','${j.company_name}','${j.company_id}','${j.screening_questions||""}')">Apply Direct →</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+let currentApplyJob = null;
+
+function applyJob(jobId, title, company, companyId, screening) {
+  if (!currentUser || !currentProfile) return toast('Please log in to apply.');
+  currentApplyJob = { jobId, title, company, companyId, screening };
+  document.getElementById('applyJobTitle').textContent = `Applying for: ${title} at ${company}`;
+  document.getElementById('applyName').value = currentProfile.name || '';
+  document.getElementById('applyEmail').value = currentProfile.email || '';
+  document.getElementById('applyMajor').value = currentProfile.major || '';
+  document.getElementById('applyMessage').value = '';
+  clearMsg('applyMsg');
+  // Load screening questions
+  const screeningSection = document.getElementById('screeningAnswersSection');
+  if (currentApplyJob.screening) {
+    try {
+      const qs = JSON.parse(currentApplyJob.screening);
+      if (qs.length) {
+        screeningSection.innerHTML = '<div class="form-label" style="font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;">Screening Questions</div>' +
+          qs.map((q,i) => `<div class="form-group"><label class="form-label">${q}</label><input class="form-input" id="sa${i}" placeholder="Your answer..."/></div>`).join('');
+      } else { screeningSection.innerHTML = ''; }
+    } catch(e) { screeningSection.innerHTML = ''; }
+  } else { screeningSection.innerHTML = ''; }
+  document.getElementById('applyModal').classList.add('open');
+}
+
+function closeApply() {
+  document.getElementById('applyModal').classList.remove('open');
+}
+
+async function submitApplication() {
+  if (!currentApplyJob) return;
+  const message = document.getElementById('applyMessage').value.trim();
+  // Collect screening answers
+  let screeningAnswers = [];
+  if (currentApplyJob.screening) {
+    try {
+      const qs = JSON.parse(currentApplyJob.screening);
+      screeningAnswers = qs.map((q,i) => ({ question: q, answer: document.getElementById('sa'+i)?.value || '' }));
+    } catch(e) {}
+  }
+  showMsg('applyMsg', 'Submitting...', 'success');
+  const { error } = await db.from('applications').insert({
+    job_id: currentApplyJob.jobId,
+    job_title: currentApplyJob.title,
+    company_name: currentApplyJob.company,
+    company_id: currentApplyJob.companyId,
+    seeker_id: currentUser.id,
+    seeker_name: currentProfile.name,
+    seeker_email: currentProfile.email,
+    seeker_major: currentProfile.major,
+    seeker_role: currentProfile.role_wanted,
+    seeker_location: currentProfile.location,
+    message,
+    screening_answers: JSON.stringify(screeningAnswers),
+    created_at: new Date().toISOString()
+  });
+  if (error) return showMsg('applyMsg', 'Error submitting. Try again.', 'error');
+  showMsg('applyMsg', 'Application sent! The company will contact you directly.', 'success');
+  setTimeout(() => closeApply(), 2500);
+  toast('Application submitted!');
+}
+
+// COMPANY DASHBOARD
+async function loadCompanyDash() {
+  document.getElementById('companyName').textContent = currentProfile.name;
+  document.getElementById('jobContact').value = currentProfile.email || '';
+}
+
+function showCompanyTab(tab) {
+  document.getElementById('tab-post').style.display = 'none';
+  document.getElementById('tab-candidates').style.display = 'none';
+  document.getElementById('tab-myjobs').style.display = 'none';
+  document.getElementById('tab-applications').style.display = 'none';
+  document.getElementById('tab-' + tab).style.display = 'block';
+  if (tab === 'candidates') loadCandidates();
+  if (tab === 'myjobs') loadMyJobs();
+  if (tab === 'applications') loadApplications();
+}
+
+async function loadApplications() {
+  const { data } = await db.from('applications').select('*').eq('company_id', currentUser.id).order('created_at', { ascending: false });
+  const el = document.getElementById('applicationsList');
+  if (!data || !data.length) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">◈</div><div class="empty-text">No applications yet.<br>They will show up here when candidates apply.</div></div>';
+    return;
+  }
+  el.innerHTML = data.map(a => `
+    <div class="job-card" style="margin-bottom:2px;">
+      <div class="job-left">
+        <div class="job-title">${a.seeker_name}</div>
+        <div class="job-company">Applied for: ${a.job_title}</div>
+        <div class="job-tags">
+          <span class="tag gold">${a.seeker_role || 'Open'}</span>
+          <span class="tag">${a.seeker_location || '—'}</span>
+          <span class="tag">${a.seeker_major || '—'}</span>
+        </div>
+        ${a.message ? `<div style="margin-top:10px;font-size:0.65rem;color:var(--mid);font-style:italic;">"${a.message}"</div>` : ''}
+      </div>
+      <div class="job-right">
+        <div class="job-posted">${timeAgo(a.created_at)}</div>
+        ${a.resume_url ? `<a href="${a.resume_url}" target="_blank" class="apply-btn" style="display:block;margin-top:8px;text-align:center;text-decoration:none;">View Resume →</a>` : ''}
+        <button class="apply-btn" style="margin-top:8px;" onclick="window.open('mailto:${a.seeker_email}?subject=Re: Your application for ${a.job_title}')">Contact →</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function postJob() {
+  const title = document.getElementById('jobTitle').value.trim();
+  const type = document.getElementById('jobType').value;
+  const location = document.getElementById('jobLocation').value.trim();
+  const salary = document.getElementById('jobSalary').value.trim();
+  const desc = document.getElementById('jobDesc').value.trim();
+  const contact = document.getElementById('jobContact').value.trim();
+  if (!title || !location || !contact) return showMsg('postMsg', 'Fill in title, location, and contact email.', 'error');
+  const sq1 = document.getElementById('sq1').value.trim();
+  const sq2 = document.getElementById('sq2').value.trim();
+  const sq3 = document.getElementById('sq3').value.trim();
+  const screening = JSON.stringify([sq1,sq2,sq3].filter(q => q));
+  showMsg('postMsg', 'Publishing role...', 'success');
+  const { error } = await db.from('jobs').insert({
+    title, type, location, salary, description: desc, contact_email: contact,
+    company_id: currentUser.id, owner_id: currentUser.id,
+    company_name: currentProfile.name, screening,
+    created_at: new Date().toISOString()
+  });
+  if (error) return showMsg('postMsg', 'Error posting role: ' + error.message, 'error');
+  showMsg('postMsg', '✓ Role published successfully!', 'success');
+  document.getElementById('jobTitle').value = '';
+  document.getElementById('jobLocation').value = '';
+  document.getElementById('jobSalary').value = '';
+  document.getElementById('jobDesc').value = '';
+  document.getElementById('sq1').value = '';
+  document.getElementById('sq2').value = '';
+  document.getElementById('sq3').value = '';
+  loadStats();
+  toast('Role posted!');
+}
+
+
+async function loadCandidates() {
+  const { data } = await db.from('profiles').select('*').eq('type', 'seeker');
+  const el = document.getElementById('candGrid');
+  if (!data || !data.length) {
+    el.innerHTML = `<div class="empty"><div class="empty-icon">◈</div><div class="empty-text">No candidates yet.</div></div>`;
+    return;
+  }
+  el.innerHTML = data.map(c => `
+    <div class="cand-card">
+      <div class="cand-avatar">${c.name[0].toUpperCase()}</div>
+      <div class="cand-name">${c.name}</div>
+      <div class="cand-role">${c.role_wanted || 'Open to roles'}</div>
+      <div class="cand-detail">📍 ${c.location || '—'}<br>🎓 ${c.major || '—'}</div>
+      <button class="contact-btn" onclick="window.open('mailto:${c.email}?subject=Opportunity from ${currentProfile.name}')">Contact Direct →</button>
+    </div>
+  `).join('');
+}
+
+async function loadMyJobs() {
+  const { data } = await db.from('jobs').select('*').eq('company_id', currentUser.id).order('created_at', { ascending: false });
+  const el = document.getElementById('myJobsList');
+  if (!data || !data.length) {
+    el.innerHTML = `<div class="empty"><div class="empty-icon">◈</div><div class="empty-text">No roles posted yet.</div></div>`;
+    return;
+  }
+  el.innerHTML = data.map(j => `
+    <div class="job-card">
+      <div class="job-left">
+        <div class="job-title">${j.title}</div>
+        <div class="job-tags"><span class="tag gold">${j.type}</span><span class="tag">${j.location}</span></div>
+      </div>
+      <div class="job-right">
+        <div class="job-salary">${j.salary || 'Competitive'}</div>
+        <div class="job-posted">${timeAgo(j.created_at)}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// SEEKER TABS
+function showSeekerTab(tab) {
+  document.getElementById('stab-jobs').style.display = 'none';
+  document.getElementById('stab-applications').style.display = 'none';
+  document.getElementById('stab-profile').style.display = 'none';
+  document.getElementById('stab-' + tab).style.display = 'block';
+  if (tab === 'applications') loadMyApplications();
+  if (tab === 'profile') loadEditProfile();
+}
+
+async function loadMyApplications() {
+  const { data } = await db.from('applications').select('*').eq('seeker_id', currentUser.id).order('created_at', { ascending: false });
+  const el = document.getElementById('myApplicationsList');
+  if (!data || !data.length) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">◈</div><div class="empty-text">No applications yet.<br>Browse jobs and apply directly.</div></div>';
+    return;
+  }
+  el.innerHTML = data.map(a => `
+    <div class="job-card" style="margin-bottom:2px;">
+      <div class="job-left">
+        <div class="job-title">${a.job_title}</div>
+        <div class="job-company">${a.company_name}</div>
+        <div class="job-tags"><span class="tag gold">Applied</span></div>
+      </div>
+      <div class="job-right">
+        <div class="job-posted">${timeAgo(a.created_at)}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function loadEditProfile() {
+  if (!currentProfile) return;
+  document.getElementById('editName').value = currentProfile.name || '';
+  document.getElementById('editMajor').value = currentProfile.major || '';
+  document.getElementById('editLocation').value = currentProfile.location || '';
+  const roleSelect = document.getElementById('editRole');
+  for (let i = 0; i < roleSelect.options.length; i++) {
+    if (roleSelect.options[i].value === currentProfile.role_wanted) {
+      roleSelect.selectedIndex = i; break;
+    }
+  }
+  if (currentProfile.resume_url) {
+    document.getElementById('resumeStatus').innerHTML = '✓ Resume uploaded — <a href="' + currentProfile.resume_url + '" target="_blank" style="color:var(--gold);">View</a>';
+  }
+}
+
+async function saveProfile() {
+  const name = document.getElementById('editName').value.trim();
+  const major = document.getElementById('editMajor').value.trim();
+  const role_wanted = document.getElementById('editRole').value;
+  const location = document.getElementById('editLocation').value.trim();
+  const fileInput = document.getElementById('resumeFile');
+  showMsg('profileMsg', 'Saving...', 'success');
+
+  let resume_url = currentProfile.resume_url || null;
+
+  // Upload resume if selected
+  if (fileInput.files.length > 0) {
+    const file = fileInput.files[0];
+    const fileName = currentUser.id + '_' + Date.now() + '_' + file.name;
+    document.getElementById('resumeStatus').textContent = 'Uploading resume...';
+    const { data: uploadData, error: uploadError } = await db.storage.from('resumes').upload(fileName, file, { upsert: true });
+    if (uploadError) {
+      document.getElementById('resumeStatus').textContent = 'Upload failed: ' + uploadError.message;
+    } else {
+      const { data: urlData } = db.storage.from('resumes').getPublicUrl(fileName);
+      resume_url = urlData.publicUrl;
+      document.getElementById('resumeStatus').innerHTML = '✓ Resume uploaded — <a href="' + resume_url + '" target="_blank" style="color:var(--gold);">View</a>';
+    }
+  }
+
+  const updates = { name, major, role_wanted, location, resume_url };
+  const { error } = await db.from('profiles').update(updates).eq('id', currentUser.id);
+  if (error) return showMsg('profileMsg', 'Error saving: ' + error.message, 'error');
+  currentProfile = { ...currentProfile, ...updates };
+  showMsg('profileMsg', 'Profile saved!', 'success');
+  toast('Profile updated!');
+}
+
+// UTILS
+function showMsg(id, text, type) {
+  document.getElementById(id).innerHTML = `<div class="msg ${type}">${text}</div>`;
+}
+function clearMsg(id) { document.getElementById(id).innerHTML = ''; }
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+function timeAgo(date) {
+  const d = new Date(date);
+  const now = new Date();
+  const diff = Math.floor((now - d) / 60000);
+  if (diff < 1) return 'just now';
+  if (diff < 60) return diff + 'm ago';
+  if (diff < 1440) return Math.floor(diff/60) + 'h ago';
+  return Math.floor(diff/1440) + 'd ago';
+}
+function showEditProfile() { toast('Profile editing coming soon!'); }
+
+init();
+</script>
 </body>
 </html>
